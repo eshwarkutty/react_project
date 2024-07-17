@@ -1,5 +1,3 @@
-// authReducer.js
-
 const initialState = {
     token: null,
     username: null,
@@ -26,4 +24,4 @@ const authReducer = (state = initialState, action) => {
     }
 };
 
-export default authReducer; // No need for default export here
+export default authReducer; 

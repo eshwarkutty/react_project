@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate, Link } from 'react-router-dom'; 
-import { loginSuccess } from '../actions/authActions';
-import { loginService, registerService } from '../services/authService';
+import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { registerService } from '../services/authService';
 import './style.css'; 
 
-const Login = () => {
+const Register = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
@@ -16,29 +15,11 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await loginService({ email: username, password });
-            if (response.token) {
-                dispatch(loginSuccess(response.token, username));
-                toast.success('Login Successful');
-                navigate('/dashboard');
-            } else {
-                toast.error('Login Failed');
-            }
-        } catch (error) {
-            toast.error('Login Failed');
-        }
-    };
-
-    const handleRegister = async () => {
-        try {
             const response = await registerService({ email: username, password });
             if (response.id) {
                 toast.success('Registration Successful');
-                const loginResponse = await loginService({ email: username, password });
-                if (loginResponse.token) {
-                    dispatch(loginSuccess(loginResponse.token, username));
-                    navigate('/dashboard');
-                }
+
+                navigate('/login');
             } else {
                 toast.error('Registration Failed');
             }
@@ -49,8 +30,8 @@ const Login = () => {
 
     return (
         <div className="login-container">
-            <h2>Login</h2>
-            <form className="login-form" onSubmit={handleSubmit}>
+            <h2>Register</h2>
+             <form className="login-form" onSubmit={handleSubmit}>
                 <div>
                     <label>Username:</label>
                     <input
@@ -67,14 +48,11 @@ const Login = () => {
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </div>
-                <button type="submit">Login</button>
+                <button type="submit">Register</button>
             </form>
-            <div className="register-link">
-                <p>Don't have an account? <Link to="/register">Register</Link></p>
-            </div>
             <ToastContainer />
         </div>
     );
 };
 
-export default Login;
+export default Register;

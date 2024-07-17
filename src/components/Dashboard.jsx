@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setUserDetails } from '../actions/authActions'; // Correct import
+import { setUserDetails } from '../actions/authActions';
 import { getUserDetailsService } from '../services/userService';
+import './style.css'; 
 
 const Dashboard = () => {
     const { username, userDetails } = useSelector((state) => state.auth);
@@ -18,8 +19,8 @@ const Dashboard = () => {
     }, [userDetails, dispatch]);
 
     return (
-        <div>
-            <h2>Dashboard</h2>
+        <div className="login-container">
+            <h2>Profile</h2>
             <p>Username: {username}</p>
             {userDetails && (
                 <div>
